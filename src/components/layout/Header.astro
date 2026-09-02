@@ -1,0 +1,33 @@
+---
+const navItems = [
+  { href: '/guides/', label: 'Guides' },
+  { href: '/tools/puppy-schedule-generator/', label: 'Schedule Generator' },
+  { href: '/about/', label: 'About' },
+];
+---
+
+<header class="border-b border-stone-200 bg-white/90 backdrop-blur">
+  <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
+    <a href="/" class="text-lg font-semibold tracking-tight text-stone-900">
+      🐾 Puppy Starter Guide
+    </a>
+    <nav aria-label="Primary" class="hidden gap-6 sm:flex">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm font-medium text-stone-600 hover:text-stone-900"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    <a
+      href="/tools/puppy-schedule-generator/"
+      class="rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-700 sm:hidden"
+    >
+      Get Started
+    </a>
+  </div>
+</header>

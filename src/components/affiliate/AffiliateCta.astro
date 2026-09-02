@@ -1,0 +1,28 @@
+---
+import { buildAffiliateUrl, type affiliateLinks } from '../../lib/affiliate';
+
+interface Props {
+  linkKey: keyof typeof affiliateLinks;
+  trackingId: string;
+  heading: string;
+  body: string;
+  ctaLabel: string;
+}
+
+const { linkKey, trackingId, heading, body, ctaLabel } = Astro.props;
+const href = buildAffiliateUrl(linkKey, trackingId);
+---
+
+<aside class="rounded-2xl bg-stone-50 p-6 text-center">
+  <p class="text-lg font-semibold text-stone-900">{heading}</p>
+  <p class="mt-2 text-sm text-stone-600">{body}</p>
+  <a
+    href={href}
+    rel="sponsored noopener"
+    target="_blank"
+    data-affiliate-link={linkKey}
+    class="mt-4 inline-block rounded-full bg-amber-600 px-6 py-3 text-sm font-medium text-white hover:bg-amber-700"
+  >
+    {ctaLabel}
+  </a>
+</aside>

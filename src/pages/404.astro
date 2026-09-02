@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found" description="This page doesn't exist." noindex>
+  <div class="mx-auto max-w-xl px-4 py-24 text-center sm:px-6">
+    <p class="text-sm font-medium uppercase tracking-wide text-amber-700">404</p>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-stone-900">
+      This page wandered off.
+    </h1>
+    <p class="mt-3 text-stone-600">
+      The page you're looking for doesn't exist or may have moved.
+    </p>
+    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+      <a
+        href="/"
+        class="rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white hover:bg-stone-700"
+      >
+        Back to Home
+      </a>
+      <a
+        href="/guides/"
+        class="rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-stone-800 hover:border-stone-400"
+      >
+        Browse Guides
+      </a>
+    </div>
+  </div>
+</BaseLayout>

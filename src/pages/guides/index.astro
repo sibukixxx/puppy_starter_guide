@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/utils';
+
+const guides = (await getCollection('guides', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+---
+
+<BaseLayout
+  title="Puppy Guides"
+  description="Practical, step-by-step guides for first-time puppy owners covering feeding, potty training, sleep and daily routines."
+>
+  <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <h1 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">Puppy Guides</h1>
+    <p class="mt-3 max-w-2xl text-stone-600">
+      Practical, no-nonsense guides for the first weeks and months with your puppy.
+    </p>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      {
+        guides.map((guide) => (
+          <a
+            href={`/guides/${guide.id}/`}
+            class="block rounded-2xl border border-stone-200 p-6 transition hover:border-stone-300 hover:shadow-sm"
+          >
+            <p class="text-xs font-medium uppercase tracking-wide text-amber-700">
+              {guide.data.category}
+            </p>
+            <h2 class="mt-2 text-lg font-semibold text-stone-900">{guide.data.title}</h2>
+            <p class="mt-2 text-sm text-stone-600">{guide.data.description}</p>
+            <p class="mt-4 text-xs text-stone-400">{formatDate(guide.data.publishedAt)}</p>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

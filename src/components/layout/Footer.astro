@@ -1,0 +1,42 @@
+---
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="border-t border-stone-200 bg-stone-50">
+  <div class="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <div class="grid gap-8 sm:grid-cols-3">
+      <div>
+        <p class="text-base font-semibold text-stone-900">🐾 Puppy Starter Guide</p>
+        <p class="mt-2 text-sm text-stone-600">
+          Practical guides, checklists and tools for first-time puppy owners.
+        </p>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-stone-900">Explore</p>
+        <ul class="mt-2 space-y-2 text-sm text-stone-600">
+          <li><a href="/guides/" class="hover:text-stone-900">Guides</a></li>
+          <li>
+            <a href="/tools/puppy-schedule-generator/" class="hover:text-stone-900">
+              Puppy Schedule Generator
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-stone-900">Company</p>
+        <ul class="mt-2 space-y-2 text-sm text-stone-600">
+          <li><a href="/about/" class="hover:text-stone-900">About</a></li>
+          <li>
+            <a href="/affiliate-disclosure/" class="hover:text-stone-900">
+              Affiliate Disclosure
+            </a>
+          </li>
+          <li><a href="/privacy-policy/" class="hover:text-stone-900">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="mt-8 text-xs text-stone-400">
+      &copy; {year} Puppy Starter Guide. All rights reserved.
+    </p>
+  </div>
+</footer>

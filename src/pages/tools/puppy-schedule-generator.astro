@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PuppyScheduleGenerator from '../../components/tools/PuppyScheduleGenerator';
+
+const title = 'Puppy Schedule Generator';
+const description =
+  'Generate a free example daily schedule for your puppy based on their age, wake-up time, meals and bedtime.';
+
+const webAppJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: title,
+  applicationCategory: 'LifestyleApplication',
+  operatingSystem: 'Any',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  description,
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(webAppJsonLd)} is:inline />
+  </Fragment>
+
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+    <h1 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">
+      Puppy Schedule Generator
+    </h1>
+    <p class="mt-3 max-w-2xl text-stone-600">
+      Answer a few questions and get an example daily schedule covering feeding, potty breaks,
+      naps and play — built with a simple, transparent rule-based planner (no AI guesswork).
+    </p>
+
+    <div class="mt-10">
+      <PuppyScheduleGenerator client:load />
+    </div>
+
+    <p class="mt-10 text-sm text-stone-500">
+      Want the full picture behind this schedule? Read
+      <a href="/guides/puppy-daily-routine/" class="font-medium text-amber-700 underline">
+        Puppy Daily Routine
+      </a>
+      or
+      <a href="/guides/puppy-potty-training-schedule/" class="font-medium text-amber-700 underline">
+        Puppy Potty Training Schedule by Age
+      </a>.
+    </p>
+  </div>
+</BaseLayout>

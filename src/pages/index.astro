@@ -1,0 +1,162 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_TAGLINE } from '../lib/seo';
+
+const guides = await getCollection('guides', ({ data }) => !data.draft);
+const bySlug = (slug: string) => guides.find((g) => g.id === slug);
+
+const firstWeek = bySlug('first-week-with-a-puppy');
+const pottyTraining = bySlug('puppy-potty-training-schedule');
+const dailyRoutine = bySlug('puppy-daily-routine');
+---
+
+<BaseLayout
+  title="Puppy Starter Guide"
+  description="Practical guides, checklists and tools for first-time puppy owners — feeding, potty training, sleep and daily routines."
+>
+  <!-- Hero -->
+  <section class="bg-stone-50">
+    <div class="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 sm:py-24">
+      <h1 class="text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
+        Bringing home a puppy?<br class="hidden sm:block" /> Start here.
+      </h1>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-stone-600">
+        {SITE_TAGLINE}
+      </p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a
+          href="/guides/first-week-with-a-puppy/"
+          class="rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white hover:bg-stone-700"
+        >
+          Read the First Week Guide
+        </a>
+        <a
+          href="/tools/puppy-schedule-generator/"
+          class="rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-stone-800 hover:border-stone-400"
+        >
+          Try the Schedule Generator
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Start Here -->
+  {
+    firstWeek && (
+      <section class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+        <p class="text-sm font-medium uppercase tracking-wide text-amber-700">Start here</p>
+        <div class="mt-4 rounded-2xl border border-stone-200 p-8 sm:flex sm:items-center sm:justify-between sm:gap-8">
+          <div>
+            <h2 class="text-2xl font-semibold text-stone-900">{firstWeek.data.title}</h2>
+            <p class="mt-2 max-w-xl text-stone-600">{firstWeek.data.description}</p>
+          </div>
+          <a
+            href={`/guides/${firstWeek.id}/`}
+            class="mt-4 inline-block shrink-0 rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white hover:bg-stone-700 sm:mt-0"
+          >
+            Read the guide
+          </a>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Popular Puppy Guides -->
+  <section class="bg-stone-50">
+    <div class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+      <h2 class="text-2xl font-semibold text-stone-900">Popular Puppy Guides</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-3">
+        {
+          guides.map((guide) => (
+            <a
+              href={`/guides/${guide.id}/`}
+              class="block rounded-2xl bg-white p-6 shadow-sm ring-1 ring-stone-200 transition hover:shadow-md"
+            >
+              <p class="text-xs font-medium uppercase tracking-wide text-amber-700">
+                {guide.data.category}
+              </p>
+              <h3 class="mt-2 font-semibold text-stone-900">{guide.data.title}</h3>
+              <p class="mt-2 text-sm text-stone-600">{guide.data.description}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Free Puppy Tools -->
+  <section class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+    <h2 class="text-2xl font-semibold text-stone-900">Free Puppy Tools</h2>
+    <div class="mt-8 rounded-2xl border border-stone-200 p-8 sm:flex sm:items-center sm:justify-between sm:gap-8">
+      <div>
+        <h3 class="text-xl font-semibold text-stone-900">Puppy Schedule Generator</h3>
+        <p class="mt-2 max-w-xl text-stone-600">
+          Answer a few questions about your puppy's age and your day, and get a free example
+          daily schedule — no sign-up required.
+        </p>
+      </div>
+      <a
+        href="/tools/puppy-schedule-generator/"
+        class="mt-4 inline-block shrink-0 rounded-full bg-amber-600 px-6 py-3 text-sm font-medium text-white hover:bg-amber-700 sm:mt-0"
+      >
+        Generate a schedule
+      </a>
+    </div>
+  </section>
+
+  <!-- Puppy Training -->
+  {
+    pottyTraining && (
+      <section class="bg-stone-50">
+        <div class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+          <h2 class="text-2xl font-semibold text-stone-900">Puppy Training</h2>
+          <div class="mt-8 rounded-2xl bg-white p-8 shadow-sm ring-1 ring-stone-200 sm:flex sm:items-center sm:justify-between sm:gap-8">
+            <div>
+              <h3 class="text-xl font-semibold text-stone-900">{pottyTraining.data.title}</h3>
+              <p class="mt-2 max-w-xl text-stone-600">{pottyTraining.data.description}</p>
+            </div>
+            <a
+              href={`/guides/${pottyTraining.id}/`}
+              class="mt-4 inline-block shrink-0 rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-stone-800 hover:border-stone-400 sm:mt-0"
+            >
+              Read the guide
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Puppy Routine -->
+  {
+    dailyRoutine && (
+      <section class="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+        <h2 class="text-2xl font-semibold text-stone-900">Puppy Routine</h2>
+        <div class="mt-8 rounded-2xl border border-stone-200 p-8 sm:flex sm:items-center sm:justify-between sm:gap-8">
+          <div>
+            <h3 class="text-xl font-semibold text-stone-900">{dailyRoutine.data.title}</h3>
+            <p class="mt-2 max-w-xl text-stone-600">{dailyRoutine.data.description}</p>
+          </div>
+          <a
+            href={`/guides/${dailyRoutine.id}/`}
+            class="mt-4 inline-block shrink-0 rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-stone-800 hover:border-stone-400 sm:mt-0"
+          >
+            Read the guide
+          </a>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Email CTA (placeholder — no backend yet) -->
+  <section class="bg-stone-900">
+    <div class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
+      <h2 class="text-2xl font-semibold text-white">More puppy guides, coming soon</h2>
+      <p class="mx-auto mt-3 max-w-xl text-stone-300">
+        We're building out more free guides and tools for first-time puppy owners. Check back
+        soon, or start with the guides above.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
