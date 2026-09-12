@@ -1,5 +1,5 @@
 ---
-import { buildAffiliateUrl, type affiliateLinks } from '../../lib/affiliate';
+import { affiliateLinks, buildAffiliateUrl } from '../../lib/affiliate';
 
 interface Props {
   linkKey: keyof typeof affiliateLinks;
@@ -7,10 +7,15 @@ interface Props {
   heading: string;
   body: string;
   ctaLabel: string;
+  articleSlug: string;
+  position: string;
+  source: string;
 }
 
-const { linkKey, trackingId, heading, body, ctaLabel } = Astro.props;
+const { linkKey, trackingId, heading, body, ctaLabel, articleSlug, position, source } =
+  Astro.props;
 const href = buildAffiliateUrl(linkKey, trackingId);
+const provider = affiliateLinks[linkKey].provider;
 ---
 
 <aside class="rounded-2xl bg-stone-50 p-6 text-center">
@@ -21,8 +26,30 @@ const href = buildAffiliateUrl(linkKey, trackingId);
     rel="sponsored noopener"
     target="_blank"
     data-affiliate-link={linkKey}
+    data-affiliate-provider={provider}
+    data-affiliate-article={articleSlug}
+    data-affiliate-position={position}
+    data-affiliate-source={source}
     class="mt-4 inline-block rounded-full bg-amber-600 px-6 py-3 text-sm font-medium text-white hover:bg-amber-700"
   >
     {ctaLabel}
   </a>
 </aside>
+
+<script>
+  import { buildAffiliateClickEvent, trackEvent } from '../../lib/analytics';
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-affiliate-link]').forEach((link) => {
+    link.addEventListener('click', () => {
+      trackEvent(
+        buildAffiliateClickEvent({
+          articleSlug: link.dataset.affiliateArticle ?? '',
+          affiliateProvider: link.dataset.affiliateProvider ?? '',
+          product: link.dataset.affiliateLink ?? '',
+          position: link.dataset.affiliatePosition ?? '',
+          source: link.dataset.affiliateSource ?? '',
+        }),
+      );
+    });
+  });
+</script>

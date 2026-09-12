@@ -30,3 +30,24 @@ export function trackEvent(event: AnalyticsEvent): void {
   window.dataLayer = window.dataLayer ?? [];
   window.dataLayer.push({ event: event.name, ...event.properties });
 }
+
+export interface AffiliateClickParams {
+  articleSlug: string;
+  affiliateProvider: string;
+  product: string;
+  position: string;
+  source: string;
+}
+
+export function buildAffiliateClickEvent(params: AffiliateClickParams): AnalyticsEvent {
+  return {
+    name: 'affiliate_click',
+    properties: {
+      article_slug: params.articleSlug,
+      affiliate_provider: params.affiliateProvider,
+      product: params.product,
+      position: params.position,
+      source: params.source,
+    },
+  };
+}

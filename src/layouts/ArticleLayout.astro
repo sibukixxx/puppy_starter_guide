@@ -11,9 +11,11 @@ interface Props {
   updatedAt: Date;
   author: string;
   affiliate: boolean;
+  articleSlug: string;
 }
 
-const { title, description, category, publishedAt, updatedAt, author, affiliate } = Astro.props;
+const { title, description, category, publishedAt, updatedAt, author, affiliate, articleSlug } =
+  Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
@@ -50,7 +52,7 @@ const breadcrumbJsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} is:inline />
   </Fragment>
 
-  <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+  <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6" data-article-slug={articleSlug}>
     <nav aria-label="Breadcrumb" class="mb-6 text-sm text-stone-500">
       <a href="/" class="hover:text-stone-700">Home</a>
       <span class="mx-1">/</span>
@@ -78,3 +80,12 @@ const breadcrumbJsonLd = {
     </div>
   </article>
 </BaseLayout>
+
+<script>
+  import { trackEvent } from '../lib/analytics';
+
+  const article = document.querySelector<HTMLElement>('[data-article-slug]');
+  if (article?.dataset.articleSlug) {
+    trackEvent({ name: 'article_view', properties: { article_slug: article.dataset.articleSlug } });
+  }
+</script>
