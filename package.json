@@ -14,7 +14,8 @@
     "astro": "astro",
     "typecheck": "astro check",
     "generate-types": "wrangler types",
-    "test": "vitest run"
+    "test": "vitest run",
+    "cf:pilot:verify": "node scripts/verify-cf-pilot.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.6",
